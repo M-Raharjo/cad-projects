@@ -439,7 +439,7 @@ show(assm)
 # Export DXF
 
 script_dir = Path(__file__).resolve().parent
-export_dir = script_dir / "exports" / f"Meja {table_length}x{table_width}mm"
+export_dir = script_dir / "exports" / f"Ukuran {table_length}x{table_width}mm"
 export_dir.mkdir(exist_ok=True)
 
 ## Helper for export
