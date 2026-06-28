@@ -1,6 +1,6 @@
 # CadQuery
 import cadquery as cq
-from ocp_vscode import show
+from ocp_vscode import show, show_object, reset_show, set_port, set_defaults, get_defaults
 import math
 from cadquery import exporters
 from pathlib import Path
@@ -440,7 +440,7 @@ show(assm)
 
 script_dir = Path(__file__).resolve().parent
 export_dir = script_dir / "exports" / f"Ukuran {table_length}x{table_width}mm"
-export_dir.mkdir(exist_ok=True)
+export_dir.mkdir(parents=True, exist_ok=True)
 
 ## Helper for export
 
