@@ -31,7 +31,7 @@ table_length = 1600
 table_width = 1000
 
 handrest_width = 100
-finger_space = 40
+finger_space = 30
 
 screw_hole_diameter = 5
 
