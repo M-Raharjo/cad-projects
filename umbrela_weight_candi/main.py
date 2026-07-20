@@ -18,7 +18,7 @@ foot_width = 10
 foot_clearance = 20
 
 # Editable Variable
-fillet_radius = 5
+fillet_radius = foot_clearance/16
 
 # Helpers
 def truncated_cone(bottom_radius,top_radius,cone_height): 
@@ -58,6 +58,8 @@ main = cone - bottom_disc - central_pole
 
 for cutter in foot_cutters:
         main = main - cutter
+
+main = main.edges().chamfer(fillet_radius)
 
 umbrela_weights = main.solids().vals()
 one_weight = (
