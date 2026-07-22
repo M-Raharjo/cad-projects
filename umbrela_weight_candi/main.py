@@ -1,5 +1,6 @@
 import cadquery as cq
 from ocp_vscode import show, show_object, reset_show, set_port, set_defaults, get_defaults
+from pathlib import Path
 
 # We will be making weight for the umbrella holder in candi tirto
 # the holder is composed of 3 discs, 3 foot and 1 central pole
@@ -8,16 +9,17 @@ from ocp_vscode import show, show_object, reset_show, set_port, set_defaults, ge
 
 
 # Physical Constraints
-height = 100
-top_disc_dia = 50
-mid_disc_dia = top_disc_dia
-bottom_disc_dia = 100
+mid_to_bot_distance = 100
+top_disc_dia = 110
+mid_disc_dia = 145
+bottom_disc_dia = 320
 pole_dia = 30
-disc_thickness = 10
-foot_width = 10
-foot_clearance = 20
+disc_thickness = 30
+foot_width = 32
+foot_clearance = 75
 
 # Editable Variable
+height = mid_to_bot_distance + disc_thickness + (foot_clearance/2)
 fillet_radius = foot_clearance/16
 
 # Helpers
@@ -31,7 +33,7 @@ def truncated_cone(bottom_radius,top_radius,cone_height):
 
 
 
-cone = truncated_cone((bottom_disc_dia+foot_clearance)/2,(top_disc_dia+foot_clearance)/2,height)
+cone = truncated_cone((bottom_disc_dia+foot_clearance)/2,(mid_disc_dia+foot_clearance)/2,height)
 
 bottom_disc = cq.Workplane().cylinder(
         disc_thickness
@@ -68,3 +70,22 @@ one_weight = (
 )
 
 show(umbrela_weights)
+
+## Exporting
+
+# Folder containing this main.py file
+script_dir = Path(__file__).resolve().parent
+
+# Create exports folder if it does not exist
+export_dir = script_dir / "exports"
+export_dir.mkdir(parents=True, exist_ok=True)
+
+# Export STL
+export_path = export_dir / "umbrella_weight.stl"
+
+cq.exporters.export(
+    one_weight,
+    str(export_path),
+    tolerance=0.05,
+    angularTolerance=0.1,
+)
